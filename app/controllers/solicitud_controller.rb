@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Controlador para gestionar las solicitudes de compra
 class SolicitudController < ApplicationController
   # Muestra las solicitudes y productos asociados del usuario actual

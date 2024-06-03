@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -11,6 +13,8 @@ gem 'sprockets-rails'
 
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 1.1'
+
+
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '~> 5.0'
@@ -58,13 +62,7 @@ group :development, :test do
 end
 
 group :development do
-  # Use console on exceptions pages [https://github.com/rails/web-console]
   gem 'web-console'
-
-  # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
-  # gem "rack-mini-profiler"
-
-  # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 end
 
@@ -99,3 +97,7 @@ gem 'yard', '~> 0.9.26'
 
 gem 'httparty'
 gem 'rails-controller-testing'
+gem 'shoulda-matchers', '~> 5.0', require: false
+
+
+

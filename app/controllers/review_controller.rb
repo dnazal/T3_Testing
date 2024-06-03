@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Controlador para las acciones relacionadas con las reseñas de productos
 class ReviewController < ApplicationController
   load_and_authorize_resource
@@ -22,9 +24,7 @@ class ReviewController < ApplicationController
   def actualizar_review
     @reviews = Review.find(params[:id])
 
-    unless @reviews.update(parametros)
-      flash[:error] = 'Hubo un error al editar la reseña. Complete todos los campos solicitados!'
-    end
+    flash[:error] = 'Hubo un error al editar la reseña. Complete todos los campos solicitados!' unless @reviews.update(parametros)
     redirect_to "/products/leer/#{@reviews.product.id}"
   end
 
