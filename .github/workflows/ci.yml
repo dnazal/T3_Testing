@@ -9,6 +9,20 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:14
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: Testing_db_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
     - uses: actions/checkout@v2
@@ -16,15 +30,27 @@ jobs:
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: '3.1.3'  
+        ruby-version: '3.1.3'
 
     - name: Install dependencies
       run: |
         gem install bundler
         bundle install
 
+    - name: Set up database
+      run: |
+        sudo apt-get install libpq-dev
+        bundle exec rails db:create db:schema:load --trace
+
     - name: Run RuboCop
       run: bundle exec rubocop
 
     - name: Run tests
-      run: bundle exec rspec 
+      run: bundle exec rspec
+
+    env:
+      RAILS_ENV: test
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+      DB_HOST: localhost
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/Testing_db_test
