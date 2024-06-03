@@ -1,0 +1,505 @@
+  [1m[35m (273.5ms)[0m  [1m[35mCREATE DATABASE "Testing_db_development" ENCODING = 'unicode'[0m
+  [1m[35m (67.0ms)[0m  [1m[35mCREATE DATABASE "Testing_db_test" ENCODING = 'unicode'[0m
+  [1m[35m (11.6ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (3.0ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5691751466433709320)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to DeviseCreateUsers (20230414200557)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (6.3ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "email" character varying DEFAULT '' NOT NULL, "encrypted_password" character varying DEFAULT '' NOT NULL, "reset_password_token" character varying, "reset_password_sent_at" timestamp(6), "remember_created_at" timestamp(6), "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")[0m
+  [1m[35m (1.2ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230414200557"]]
+  [1m[36mTRANSACTION (0.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddNameToUser (20230414202922)
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.6ms)[0m  [1m[35mALTER TABLE "users" ADD "name" character varying[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230414202922"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateProducts (20230425170214)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.0ms)[0m  [1m[35mCREATE TABLE "products" ("id" bigserial primary key, "nombre" character varying, "precio" character varying, "stock" character varying, "img" character varying, "url" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, "deleted_at" timestamp(6))[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230425170214"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to ChangeImgTypeInProducts (20230426022542)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.8ms)[0m  [1m[35mALTER TABLE "products" ALTER COLUMN "img" TYPE bytea USING img::bytea[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230426022542"]]
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateReviews (20230426142352)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (2.9ms)[0m  [1m[35mCREATE TABLE "reviews" ("id" bigserial primary key, "tittle" character varying, "description" character varying, "calification" character varying, "product_id" bigint, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (1.3ms)[0m  [1m[35mCREATE INDEX "index_reviews_on_product_id" ON "reviews" ("product_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230426142352"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to ChangeImgDataTypeInProducts (20230429135639)
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.5ms)[0m  [1m[35mALTER TABLE "products" ALTER COLUMN "img" TYPE character varying[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230429135639"]]
+  [1m[36mTRANSACTION (1.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddUserIdToProducts (20230429204529)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.7ms)[0m  [1m[35mALTER TABLE "products" ADD "user_id" integer[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE INDEX "index_products_on_user_id" ON "products" ("user_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230429204529"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddUserIdToReviews (20230429210347)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "reviews" ADD "user_id" integer[0m
+  [1m[35m (3.2ms)[0m  [1m[35mCREATE INDEX "index_reviews_on_user_id" ON "reviews" ("user_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230429210347"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddRoleToUsers (20230430150446)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "users" ADD "role" character varying[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230430150446"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddDefaultRoleToUsers (20230430152312)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "users" ALTER COLUMN "role" TYPE character varying, ALTER COLUMN "role" SET DEFAULT 'normal'[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230430152312"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to RemoveEmailRestrictionsFromUsers (20230501004140)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.7ms)[0m  [1m[35mALTER TABLE "users" ALTER COLUMN "email" TYPE character varying, ALTER COLUMN "email" DROP DEFAULT, ALTER COLUMN "email" DROP NOT NULL[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230501004140"]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateMessages (20230505150419)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (6.0ms)[0m  [1m[35mCREATE TABLE "messages" ("id" bigserial primary key, "body" character varying, "user_id" integer, "product_id" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230505150419"]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddParentIdToMessages (20230505154415)
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "messages" ADD "parent_id" integer[0m
+  [1m[35m (0.9ms)[0m  [1m[35mCREATE INDEX "index_messages_on_parent_id" ON "messages" ("parent_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230505154415"]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to RemoveParentIdFromMessages (20230505173612)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "messages" DROP COLUMN "parent_id"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230505173612"]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddAncestryToMessages (20230505185228)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "messages" ADD "ancestry" character varying[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230505185228"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateSolicituds (20230513151630)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (3.6ms)[0m  [1m[35mCREATE TABLE "solicituds" ("id" bigserial primary key, "status" character varying, "stock" integer, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230513151630"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddProductAndUserToSolicitud (20230513163951)
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "solicituds" ADD "product_id" bigint NOT NULL[0m
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE INDEX "index_solicituds_on_product_id" ON "solicituds" ("product_id")[0m
+  [1m[35m (3.6ms)[0m  [1m[35mALTER TABLE "solicituds" ADD CONSTRAINT "fk_rails_bbec2cda1e"
+FOREIGN KEY ("product_id")
+  REFERENCES "products" ("id")
+[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "solicituds" ADD "user_id" bigint NOT NULL[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE INDEX "index_solicituds_on_user_id" ON "solicituds" ("user_id")[0m
+  [1m[35m (1.8ms)[0m  [1m[35mALTER TABLE "solicituds" ADD CONSTRAINT "fk_rails_41de9691fc"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230513163951"]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddDeseadosToUsers (20230519190103)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "users" ADD "deseados" character varying[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230519190103"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to ChangeDeseadosTypeInUsers (20230520021444)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (3.6ms)[0m  [1m[35m      ALTER TABLE users
+      ALTER COLUMN deseados TYPE text[] USING deseados::text[];
+[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230520021444"]]
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddCategoriesToProducts (20230520192404)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.7ms)[0m  [1m[35mALTER TABLE "products" ADD "categories" character varying[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230520192404"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddImageToUsers (20230520225952)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "users" ADD "image" character varying[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230520225952"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to UpdateUsersDeseados (20230521182437)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Update All (1.0ms)[0m  [1m[33mUPDATE "users" SET "deseados" = $1 WHERE "users"."deseados" IS NULL[0m  [["deseados", "{}"]]
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230521182437"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateContactMessages (20230615005709)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (3.6ms)[0m  [1m[35mCREATE TABLE "contact_messages" ("id" bigserial primary key, "title" character varying, "body" character varying, "name" character varying, "mail" character varying, "phone" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230615005709"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateShoppingCarts (20230615181438)
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (3.2ms)[0m  [1m[35mCREATE TABLE "shopping_carts" ("id" bigserial primary key, "user_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_8228391db2"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (0.7ms)[0m  [1m[35mCREATE INDEX "index_shopping_carts_on_user_id" ON "shopping_carts" ("user_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230615181438"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddHorariosToProducts (20230615223847)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.3ms)[0m  [1m[35mALTER TABLE "products" ADD "horarios" character varying[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230615223847"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddReservationInfoToSolicitudes (20230615233135)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.4ms)[0m  [1m[35mALTER TABLE "solicituds" ADD "reservation_info" character varying[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230615233135"]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddProductsToShoppingCart (20230616000917)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (3.6ms)[0m  [1m[35mALTER TABLE "shopping_carts" ADD "products" jsonb[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230616000917"]]
+  [1m[36mTRANSACTION (0.5ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateActiveStorageTables (20230918014607)
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.6ms)[0m  [1m[35mCREATE TABLE "active_storage_blobs" ("id" bigserial primary key, "key" character varying NOT NULL, "filename" character varying NOT NULL, "content_type" character varying, "metadata" text, "service_name" character varying NOT NULL, "byte_size" bigint NOT NULL, "checksum" character varying, "created_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (1.4ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_active_storage_blobs_on_key" ON "active_storage_blobs" ("key")[0m
+  [1m[35m (3.5ms)[0m  [1m[35mCREATE TABLE "active_storage_attachments" ("id" bigserial primary key, "name" character varying NOT NULL, "record_type" character varying NOT NULL, "record_id" bigint NOT NULL, "blob_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_c3b3935057"
+FOREIGN KEY ("blob_id")
+  REFERENCES "active_storage_blobs" ("id")
+)[0m
+  [1m[35m (1.1ms)[0m  [1m[35mCREATE INDEX "index_active_storage_attachments_on_blob_id" ON "active_storage_attachments" ("blob_id")[0m
+  [1m[35m (1.5ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_active_storage_attachments_uniqueness" ON "active_storage_attachments" ("record_type", "record_id", "name", "blob_id")[0m
+  [1m[35m (3.6ms)[0m  [1m[35mCREATE TABLE "active_storage_variant_records" ("id" bigserial primary key, "blob_id" bigint NOT NULL, "variation_digest" character varying NOT NULL, CONSTRAINT "fk_rails_993965df05"
+FOREIGN KEY ("blob_id")
+  REFERENCES "active_storage_blobs" ("id")
+)[0m
+  [1m[35m (1.0ms)[0m  [1m[35mCREATE UNIQUE INDEX "index_active_storage_variant_records_uniqueness" ON "active_storage_variant_records" ("blob_id", "variation_digest")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230918014607"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to RemoveImgFromProducts (20230918021536)
+  [1m[36mTRANSACTION (1.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "products" DROP COLUMN "img"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230918021536"]]
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mCOMMIT[0m
+Migrating to RemoveUrlFromProducts (20231006182443)
+  [1m[36mTRANSACTION (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "products" DROP COLUMN "url"[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.3ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20231006182443"]]
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (3.5ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2024-06-03 20:34:00.000985"], ["updated_at", "2024-06-03 20:34:00.000985"]]
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(5691751466433709320)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (1.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/" for ::1 at 2024-06-03 16:34:33 -0400
+  [1m[36mActiveRecord::SchemaMigration Pluck (1.0ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by PagesController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering pages/index.html.erb within layouts/application
+Importmap skipped missing path: application.js
+Importmap skipped missing path: application.js
+  Rendered pages/index.html.erb within layouts/application (Duration: 1687.8ms | Allocations: 109967)
+  Rendered layout layouts/application.html.erb (Duration: 1690.1ms | Allocations: 112998)
+Completed 200 OK in 1895ms (Views: 1695.6ms | ActiveRecord: 0.0ms | Allocations: 122711)
+
+
+Started GET "/products/index" for ::1 at 2024-06-03 16:48:12 -0400
+Processing by ProductsController#index as HTML
+User: nil
+  Rendering layout layouts/application.html.erb
+  Rendering products/index.html.erb within layouts/application
+  [1m[36mProduct Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "products" LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/products/index.html.erb:39
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products"[0m
+  ↳ app/views/products/index.html.erb:42
+  Rendered products/index.html.erb within layouts/application (Duration: 105.1ms | Allocations: 7128)
+  Rendered layout layouts/application.html.erb (Duration: 116.0ms | Allocations: 9975)
+Completed 200 OK in 159ms (Views: 68.3ms | ActiveRecord: 51.1ms | Allocations: 19194)
+
+
+Started GET "/products/index" for ::1 at 2024-06-03 16:48:22 -0400
+Processing by ProductsController#index as HTML
+User: nil
+  Rendering layout layouts/application.html.erb
+  Rendering products/index.html.erb within layouts/application
+  [1m[36mProduct Exists? (3.0ms)[0m  [1m[34mSELECT 1 AS one FROM "products" LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/products/index.html.erb:39
+  [1m[36mProduct Load (0.3ms)[0m  [1m[34mSELECT "products".* FROM "products"[0m
+  ↳ app/views/products/index.html.erb:42
+  Rendered products/index.html.erb within layouts/application (Duration: 25.0ms | Allocations: 1679)
+  Rendered layout layouts/application.html.erb (Duration: 30.4ms | Allocations: 4257)
+Completed 200 OK in 35ms (Views: 27.7ms | ActiveRecord: 3.3ms | Allocations: 5321)
+
+
+Started GET "/products/index" for ::1 at 2024-06-03 16:48:23 -0400
+Processing by ProductsController#index as HTML
+User: nil
+  Rendering layout layouts/application.html.erb
+  Rendering products/index.html.erb within layouts/application
+  [1m[36mProduct Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "products" LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/products/index.html.erb:39
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products"[0m
+  ↳ app/views/products/index.html.erb:42
+  Rendered products/index.html.erb within layouts/application (Duration: 3.4ms | Allocations: 1672)
+  Rendered layout layouts/application.html.erb (Duration: 9.5ms | Allocations: 4257)
+Completed 200 OK in 13ms (Views: 9.5ms | ActiveRecord: 0.5ms | Allocations: 5208)
+
+
+Started GET "/products/index" for ::1 at 2024-06-03 16:48:49 -0400
+Processing by ProductsController#index as HTML
+User: nil
+  Rendering layout layouts/application.html.erb
+  Rendering products/index.html.erb within layouts/application
+  [1m[36mProduct Exists? (1.9ms)[0m  [1m[34mSELECT 1 AS one FROM "products" LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/products/index.html.erb:39
+  [1m[36mProduct Load (0.5ms)[0m  [1m[34mSELECT "products".* FROM "products"[0m
+  ↳ app/views/products/index.html.erb:42
+  Rendered products/index.html.erb within layouts/application (Duration: 14.5ms | Allocations: 1672)
+  Rendered layout layouts/application.html.erb (Duration: 26.0ms | Allocations: 4252)
+Completed 200 OK in 38ms (Views: 24.9ms | ActiveRecord: 2.4ms | Allocations: 5200)
+
+
+Started GET "/products/index" for ::1 at 2024-06-03 16:48:49 -0400
+Processing by ProductsController#index as HTML
+User: nil
+  Rendering layout layouts/application.html.erb
+  Rendering products/index.html.erb within layouts/application
+  [1m[36mProduct Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "products" LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/products/index.html.erb:39
+  [1m[36mProduct Load (0.3ms)[0m  [1m[34mSELECT "products".* FROM "products"[0m
+  ↳ app/views/products/index.html.erb:42
+  Rendered products/index.html.erb within layouts/application (Duration: 2.8ms | Allocations: 1663)
+  Rendered layout layouts/application.html.erb (Duration: 6.8ms | Allocations: 4240)
+Completed 200 OK in 9ms (Views: 6.5ms | ActiveRecord: 0.6ms | Allocations: 5177)
+
+
+Started GET "/products/index" for ::1 at 2024-06-03 16:48:50 -0400
+Processing by ProductsController#index as HTML
+User: nil
+  Rendering layout layouts/application.html.erb
+  Rendering products/index.html.erb within layouts/application
+  [1m[36mProduct Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "products" LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/products/index.html.erb:39
+  [1m[36mProduct Load (0.2ms)[0m  [1m[34mSELECT "products".* FROM "products"[0m
+  ↳ app/views/products/index.html.erb:42
+  Rendered products/index.html.erb within layouts/application (Duration: 5.6ms | Allocations: 1663)
+  Rendered layout layouts/application.html.erb (Duration: 8.5ms | Allocations: 4240)
+Completed 200 OK in 14ms (Views: 8.5ms | ActiveRecord: 0.7ms | Allocations: 5165)
+
+
+Started GET "/contacto" for ::1 at 2024-06-03 16:48:57 -0400
+Processing by ContactMessageController#mostrar as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering contact_message/contacto.html.erb within layouts/application
+  Rendered contact_message/contacto.html.erb within layouts/application (Duration: 2.4ms | Allocations: 1009)
+  Rendered layout layouts/application.html.erb (Duration: 6.0ms | Allocations: 3845)
+Completed 200 OK in 23ms (Views: 7.8ms | ActiveRecord: 3.5ms | Allocations: 6310)
+
+
+Started GET "/" for ::1 at 2024-06-03 16:49:00 -0400
+Processing by PagesController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering pages/index.html.erb within layouts/application
+  Rendered pages/index.html.erb within layouts/application (Duration: 4.6ms | Allocations: 4635)
+  Rendered layout layouts/application.html.erb (Duration: 5.5ms | Allocations: 6495)
+Completed 200 OK in 6ms (Views: 5.7ms | ActiveRecord: 0.0ms | Allocations: 6769)
+
+
+Started GET "/products/index" for ::1 at 2024-06-03 16:51:05 -0400
+Processing by ProductsController#index as HTML
+User: nil
+  Rendering layout layouts/application.html.erb
+  Rendering products/index.html.erb within layouts/application
+  [1m[36mProduct Exists? (12.2ms)[0m  [1m[34mSELECT 1 AS one FROM "products" LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/products/index.html.erb:39
+  [1m[36mProduct Load (0.4ms)[0m  [1m[34mSELECT "products".* FROM "products"[0m
+  ↳ app/views/products/index.html.erb:42
+  Rendered products/index.html.erb within layouts/application (Duration: 41.8ms | Allocations: 1763)
+  Rendered layout layouts/application.html.erb (Duration: 53.3ms | Allocations: 4340)
+Completed 200 OK in 65ms (Views: 44.9ms | ActiveRecord: 12.6ms | Allocations: 5318)
+
+
+Started GET "/login" for ::1 at 2024-06-03 16:51:06 -0400
+Processing by Users::SessionsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering devise/sessions/new.html.erb within layouts/application
+  Rendered devise/shared/_links.html.erb (Duration: 1.0ms | Allocations: 738)
+  Rendered devise/sessions/new.html.erb within layouts/application (Duration: 11.3ms | Allocations: 3977)
+  Rendered layout layouts/application.html.erb (Duration: 13.3ms | Allocations: 6798)
+Completed 200 OK in 50ms (Views: 14.9ms | ActiveRecord: 26.4ms | Allocations: 16430)
+
+
+Started GET "/register" for ::1 at 2024-06-03 16:51:07 -0400
+Processing by Users::RegistrationsController#new as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering devise/registrations/new.html.erb within layouts/application
+  Rendered devise/shared/_links.html.erb (Duration: 0.3ms | Allocations: 158)
+  Rendered devise/registrations/new.html.erb within layouts/application (Duration: 2.4ms | Allocations: 1823)
+  Rendered layout layouts/application.html.erb (Duration: 4.9ms | Allocations: 4655)
+Completed 200 OK in 8ms (Views: 6.7ms | ActiveRecord: 0.0ms | Allocations: 6187)
+
+
+Started POST "/" for ::1 at 2024-06-03 16:51:31 -0400
+Processing by Users::RegistrationsController#create as HTML
+  Parameters: {"authenticity_token"=>"[FILTERED]", "user"=>{"email"=>"diego.nazal@uc.cl", "name"=>"Diego ", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]", "role"=>""}, "commit"=>"Registrarse"}
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists? (2.8ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "diego.nazal@uc.cl"], ["LIMIT", 1]]
+  [1m[36mCACHE User Exists? (0.0ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "diego.nazal@uc.cl"], ["LIMIT", 1]]
+  [1m[36mUser Create (15.4ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "created_at", "updated_at", "name", "role", "deseados", "image") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING "id"[0m  [["email", "diego.nazal@uc.cl"], ["encrypted_password", "[FILTERED]"], ["reset_password_token", "[FILTERED]"], ["reset_password_sent_at", "[FILTERED]"], ["remember_created_at", nil], ["created_at", "2024-06-03 20:51:32.405239"], ["updated_at", "2024-06-03 20:51:32.405239"], ["name", "Diego "], ["role", ""], ["deseados", "{}"], ["image", nil]]
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+Redirected to http://[::1]:3000/
+Completed 303 See Other in 761ms (ActiveRecord: 19.0ms | Allocations: 13290)
+
+
+Started GET "/" for ::1 at 2024-06-03 16:51:32 -0400
+Processing by PagesController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering pages/index.html.erb within layouts/application
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/pages/index.html.erb:108
+  Rendered pages/index.html.erb within layouts/application (Duration: 7.1ms | Allocations: 5548)
+  [1m[36mShoppingCart Load (1.2ms)[0m  [1m[34mSELECT "shopping_carts".* FROM "shopping_carts" WHERE "shopping_carts"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 1]]
+  ↳ app/views/layouts/application.html.erb:57
+  [1m[36mActiveStorage::Attachment Load (2.6ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 1], ["record_type", "User"], ["name", "image"], ["LIMIT", 1]]
+  ↳ app/views/layouts/application.html.erb:95
+  Rendered layout layouts/application.html.erb (Duration: 32.9ms | Allocations: 17956)
+Completed 200 OK in 33ms (Views: 24.7ms | ActiveRecord: 8.4ms | Allocations: 18278)
+
+
+Started GET "/products/index" for ::1 at 2024-06-03 16:51:52 -0400
+Processing by ProductsController#index as HTML
+  [1m[36mUser Load (12.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+User: #<User id: 1, email: "diego.nazal@uc.cl", created_at: "2024-06-03 20:51:32.405239000 +0000", updated_at: "2024-06-03 20:51:32.405239000 +0000", name: "Diego ", role: "", deseados: [], image: nil>
+  Rendering layout layouts/application.html.erb
+  Rendering products/index.html.erb within layouts/application
+  [1m[36mProduct Exists? (0.5ms)[0m  [1m[34mSELECT 1 AS one FROM "products" LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/products/index.html.erb:39
+  [1m[36mProduct Load (0.3ms)[0m  [1m[34mSELECT "products".* FROM "products"[0m
+  ↳ app/views/products/index.html.erb:42
+  Rendered products/index.html.erb within layouts/application (Duration: 3.0ms | Allocations: 1806)
+  [1m[36mShoppingCart Load (0.3ms)[0m  [1m[34mSELECT "shopping_carts".* FROM "shopping_carts" WHERE "shopping_carts"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 1]]
+  ↳ app/views/layouts/application.html.erb:57
+  [1m[36mActiveStorage::Attachment Load (0.4ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 1], ["record_type", "User"], ["name", "image"], ["LIMIT", 1]]
+  ↳ app/views/layouts/application.html.erb:95
+  Rendered layout layouts/application.html.erb (Duration: 12.3ms | Allocations: 7222)
+Completed 200 OK in 52ms (Views: 11.5ms | ActiveRecord: 13.8ms | Allocations: 13820)
+
+
+Started GET "/products/index" for ::1 at 2024-06-03 16:51:54 -0400
+Processing by ProductsController#index as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+User: #<User id: 1, email: "diego.nazal@uc.cl", created_at: "2024-06-03 20:51:32.405239000 +0000", updated_at: "2024-06-03 20:51:32.405239000 +0000", name: "Diego ", role: "", deseados: [], image: nil>
+  Rendering layout layouts/application.html.erb
+  Rendering products/index.html.erb within layouts/application
+  [1m[36mProduct Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "products" LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/products/index.html.erb:39
+  [1m[36mProduct Load (0.4ms)[0m  [1m[34mSELECT "products".* FROM "products"[0m
+  ↳ app/views/products/index.html.erb:42
+  Rendered products/index.html.erb within layouts/application (Duration: 4.0ms | Allocations: 1659)
+  [1m[36mShoppingCart Load (0.4ms)[0m  [1m[34mSELECT "shopping_carts".* FROM "shopping_carts" WHERE "shopping_carts"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 1]]
+  ↳ app/views/layouts/application.html.erb:57
+  [1m[36mActiveStorage::Attachment Load (0.2ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 1], ["record_type", "User"], ["name", "image"], ["LIMIT", 1]]
+  ↳ app/views/layouts/application.html.erb:95
+  Rendered layout layouts/application.html.erb (Duration: 14.8ms | Allocations: 6807)
+Completed 200 OK in 23ms (Views: 14.2ms | ActiveRecord: 1.9ms | Allocations: 9245)
+
+
+Started GET "/products/index" for ::1 at 2024-06-03 16:59:32 -0400
+Processing by ProductsController#index as HTML
+  [1m[36mUser Load (4.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+User: #<User id: 1, email: "diego.nazal@uc.cl", created_at: "2024-06-03 20:51:32.405239000 +0000", updated_at: "2024-06-03 20:51:32.405239000 +0000", name: "Diego ", role: "", deseados: [], image: nil>
+  Rendering layout layouts/application.html.erb
+  Rendering products/index.html.erb within layouts/application
+  [1m[36mProduct Exists? (9.8ms)[0m  [1m[34mSELECT 1 AS one FROM "products" LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/products/index.html.erb:39
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products"[0m
+  ↳ app/views/products/index.html.erb:42
+  Rendered products/index.html.erb within layouts/application (Duration: 13.4ms | Allocations: 1680)
+  [1m[36mShoppingCart Load (0.8ms)[0m  [1m[34mSELECT "shopping_carts".* FROM "shopping_carts" WHERE "shopping_carts"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 1]]
+  ↳ app/views/layouts/application.html.erb:57
+  [1m[36mActiveStorage::Attachment Load (1.3ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 1], ["record_type", "User"], ["name", "image"], ["LIMIT", 1]]
+  ↳ app/views/layouts/application.html.erb:95
+  Rendered layout layouts/application.html.erb (Duration: 32.0ms | Allocations: 6864)
+Completed 200 OK in 139ms (Views: 20.4ms | ActiveRecord: 77.1ms | Allocations: 12161)
+
+
+Started GET "/products/index" for ::1 at 2024-06-03 16:59:33 -0400
+Processing by ProductsController#index as HTML
+  [1m[36mUser Load (1.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+User: #<User id: 1, email: "diego.nazal@uc.cl", created_at: "2024-06-03 20:51:32.405239000 +0000", updated_at: "2024-06-03 20:51:32.405239000 +0000", name: "Diego ", role: "", deseados: [], image: nil>
+  Rendering layout layouts/application.html.erb
+  Rendering products/index.html.erb within layouts/application
+  [1m[36mProduct Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "products" LIMIT $1[0m  [["LIMIT", 1]]
+  ↳ app/views/products/index.html.erb:39
+  [1m[36mProduct Load (0.1ms)[0m  [1m[34mSELECT "products".* FROM "products"[0m
+  ↳ app/views/products/index.html.erb:42
+  Rendered products/index.html.erb within layouts/application (Duration: 2.8ms | Allocations: 1659)
+  [1m[36mShoppingCart Load (0.3ms)[0m  [1m[34mSELECT "shopping_carts".* FROM "shopping_carts" WHERE "shopping_carts"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 1]]
+  ↳ app/views/layouts/application.html.erb:57
+  [1m[36mActiveStorage::Attachment Load (0.2ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 1], ["record_type", "User"], ["name", "image"], ["LIMIT", 1]]
+  ↳ app/views/layouts/application.html.erb:95
+  Rendered layout layouts/application.html.erb (Duration: 12.2ms | Allocations: 6807)
+Completed 200 OK in 23ms (Views: 11.7ms | ActiveRecord: 2.3ms | Allocations: 9137)
+
+
+Started GET "/" for ::1 at 2024-06-03 16:59:33 -0400
+Processing by PagesController#index as HTML
+  Rendering layout layouts/application.html.erb
+  Rendering pages/index.html.erb within layouts/application
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/views/pages/index.html.erb:108
+  Rendered pages/index.html.erb within layouts/application (Duration: 9.3ms | Allocations: 4889)
+  [1m[36mShoppingCart Load (0.2ms)[0m  [1m[34mSELECT "shopping_carts".* FROM "shopping_carts" WHERE "shopping_carts"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 1]]
+  ↳ app/views/layouts/application.html.erb:57
+  [1m[36mActiveStorage::Attachment Load (0.2ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 1], ["record_type", "User"], ["name", "image"], ["LIMIT", 1]]
+  ↳ app/views/layouts/application.html.erb:95
+  Rendered layout layouts/application.html.erb (Duration: 13.8ms | Allocations: 9308)
+Completed 200 OK in 17ms (Views: 14.1ms | ActiveRecord: 0.7ms | Allocations: 9561)
+
+
+Started GET "/users/show" for ::1 at 2024-06-03 16:59:37 -0400
+Processing by UsersController#show as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/users_controller.rb:5:in `show'
+  Rendering layout layouts/application.html.erb
+  Rendering users/show.html.erb within layouts/application
+  [1m[36mActiveStorage::Attachment Load (0.4ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 1], ["record_type", "User"], ["name", "image"], ["LIMIT", 1]]
+  ↳ app/views/users/show.html.erb:4
+  Rendered users/show.html.erb within layouts/application (Duration: 4.8ms | Allocations: 2834)
+  [1m[36mShoppingCart Load (0.3ms)[0m  [1m[34mSELECT "shopping_carts".* FROM "shopping_carts" WHERE "shopping_carts"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 1]]
+  ↳ app/views/layouts/application.html.erb:57
+  Rendered layout layouts/application.html.erb (Duration: 9.8ms | Allocations: 6855)
+Completed 200 OK in 14ms (Views: 10.5ms | ActiveRecord: 1.0ms | Allocations: 8782)
+
+
+Started GET "/carro" for ::1 at 2024-06-03 16:59:40 -0400
+Processing by ShoppingCartController#show as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/shopping_cart_controller.rb:4:in `show'
+  [1m[36mShoppingCart Load (0.1ms)[0m  [1m[34mSELECT "shopping_carts".* FROM "shopping_carts" WHERE "shopping_carts"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/shopping_cart_controller.rb:6:in `show'
+  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/shopping_cart_controller.rb:167:in `crear_carro'
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/shopping_cart_controller.rb:167:in `crear_carro'
+  [1m[36mShoppingCart Create (5.5ms)[0m  [1m[32mINSERT INTO "shopping_carts" ("user_id", "created_at", "updated_at", "products") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["user_id", 1], ["created_at", "2024-06-03 20:59:40.696701"], ["updated_at", "2024-06-03 20:59:40.696701"], ["products", "{}"]]
+  ↳ app/controllers/shopping_cart_controller.rb:167:in `crear_carro'
+  [1m[36mTRANSACTION (0.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/shopping_cart_controller.rb:167:in `crear_carro'
+  Rendering layout layouts/application.html.erb
+  Rendering shopping_cart/show.html.erb within layouts/application
+  Rendered shopping_cart/show.html.erb within layouts/application (Duration: 0.9ms | Allocations: 636)
+  [1m[36mShoppingCart Load (0.3ms)[0m  [1m[34mSELECT "shopping_carts".* FROM "shopping_carts" WHERE "shopping_carts"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 1]]
+  ↳ app/views/layouts/application.html.erb:57
+  [1m[36mCACHE ShoppingCart Load (0.0ms)[0m  [1m[34mSELECT "shopping_carts".* FROM "shopping_carts" WHERE "shopping_carts"."user_id" = $1 LIMIT $2[0m  [["user_id", 1], ["LIMIT", 1]]
+  ↳ app/views/layouts/application.html.erb:61
+  [1m[36mActiveStorage::Attachment Load (0.3ms)[0m  [1m[34mSELECT "active_storage_attachments".* FROM "active_storage_attachments" WHERE "active_storage_attachments"."record_id" = $1 AND "active_storage_attachments"."record_type" = $2 AND "active_storage_attachments"."name" = $3 LIMIT $4[0m  [["record_id", 1], ["record_type", "User"], ["name", "image"], ["LIMIT", 1]]
+  ↳ app/views/layouts/application.html.erb:95
+  Rendered layout layouts/application.html.erb (Duration: 7.2ms | Allocations: 6975)
+Completed 200 OK in 46ms (Views: 7.7ms | ActiveRecord: 13.2ms | Allocations: 17324)
+
+
