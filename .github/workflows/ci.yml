@@ -9,6 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     services:
       postgres:
         image: postgres:14
@@ -37,10 +38,16 @@ jobs:
         gem install bundler
         bundle install
 
-    - name: Set up database
+    - name: Setup Chrome
       run: |
-        sudo apt-get install libpq-dev
-        bundle exec rails db:create db:schema:load --trace
+        sudo apt-get update
+        sudo apt-get install -y libappindicator1 fonts-liberation
+        sudo apt-get install -y google-chrome-stable
+        wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip
+        unzip chromedriver_linux64.zip
+        sudo mv chromedriver /usr/bin/chromedriver
+        sudo chown root:root /usr/bin/chromedriver
+        sudo chmod +x /usr/bin/chromedriver
 
     - name: Run RuboCop
       run: bundle exec rubocop
@@ -54,3 +61,4 @@ jobs:
       DB_PASSWORD: postgres
       DB_HOST: localhost
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/Testing_db_test
+      SELENIUM_DRIVER_URL: http://localhost:9515
