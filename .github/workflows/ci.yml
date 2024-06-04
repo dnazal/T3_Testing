@@ -44,6 +44,12 @@ jobs:
     - name: Run RuboCop
       run: bundle exec rubocop
 
+    - name: Check PostgreSQL Service
+      run: |
+        ping -c 3 postgres
+        PGPASSWORD=$DB_PASSWORD psql -h postgres -U $DB_USER -d $POSTGRES_DB -c 'SELECT version();'
+
+
     - name: Run tests
       run: bundle exec rspec
 
@@ -51,6 +57,6 @@ jobs:
       RAILS_ENV: test
       DB_USER: postgres
       DB_PASSWORD: postgres
-      DB_HOST: localhost
-      DATABASEFilesystem that's open for writing. It's a size-limited space provided by GitHub to every run, which you can use to store and share data needed for your jobs during a workflow run. : postgres://postgres:postgres@localhost:5432/Testing_db_test
+      DB_HOST: postgres 
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/Testing_db_test
       SELENIUM_DRIVER_URL: http://localhost:9515
