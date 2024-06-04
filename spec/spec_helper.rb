@@ -12,17 +12,19 @@ require 'selenium-webdriver'
 
 Capybara.register_driver :headless_chrome do |app|
   options = Selenium::WebDriver::Chrome::Options.new
-  options.add_argument('--headless') # Run in headless mode
-  options.add_argument('window-size=1920,1080') # Specify window size
-  options.add_argument('disable-gpu') # This flag is often recommended to avoid hardware acceleration issues
-  options.add_argument('no-sandbox') # Bypass OS security model, REQUIRED on TravisCI and other CI platforms
-  options.add_argument('disable-dev-shm-usage') # Overcome limited resource problems
-  options.add_argument('disable-infobars') # Disabling infobars helps in automation by disabling popups
-  options.add_argument('--disable-extensions') # Disable extensions
-  options.add_argument('--remote-debugging-port=9222') # Remote debugging port
+  options.add_argument('headless')
+  options.add_argument('disable-gpu')
+  options.add_argument('no-sandbox')
+  options.add_argument('disable-dev-shm-usage')
+  options.add_argument('window-size=1920x1080')
+  options.add_argument('--remote-debugging-port=9222')
+  
+  # Ensure you set the correct path for the Chrome binary
+  options.binary_location = '/usr/bin/google-chrome'
 
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
 end
+
 
 Capybara.javascript_driver = :headless_chrome
 

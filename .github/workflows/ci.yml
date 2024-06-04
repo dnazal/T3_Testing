@@ -38,12 +38,16 @@ jobs:
         gem install bundler
         bundle install
 
-    - name: Setup Chrome
+    - name: Install Google Chrome
       run: |
         sudo apt-get update
-        sudo apt-get install -y libappindicator1 fonts-liberation
         sudo apt-get install -y google-chrome-stable
-        wget https://chromedriver.storage.googleapis.com/2.41/chromedriver_linux64.zip
+
+    - name: Install ChromeDriver
+      run: |
+        CHROME_VERSION=$(google-chrome --version | cut -d ' ' -f 3 | cut -d '.' -f 1)
+        CHROMEDRIVER_VERSION=$(wget -qO- "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
+        wget -q "https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip"
         unzip chromedriver_linux64.zip
         sudo mv chromedriver /usr/bin/chromedriver
         sudo chown root:root /usr/bin/chromedriver
