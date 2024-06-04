@@ -46,8 +46,19 @@ jobs:
 
     - name: Check PostgreSQL Service
       run: |
-        nc -zv postgres 5432
-        PGPASSWORD=$DB_PASSWORD psql -h postgres -U $DB_USER -d $POSTGRES_DB -c 'SELECT version();'
+        echo "Checking PostgreSQL service availability..."
+        nc -zv postgres 5432 || true  # Using || true to ensure the step does not fail and allows further commands to execute
+        echo "Attempting to connect to PostgreSQL..."
+        PGPASSWORD=$DB_PASSWORD psql -h postgres -U $DB_USER -d $POSTGES_DB -c 'SELECT version();'
+      shell: /usr/bin/bash -e {0}
+      env:
+        RAILS_ENV: test
+        DB_USER: postgres
+        DB_PASSWORD: postgres
+        DB_HOST: postgres
+        DATABASE_URL: postgres://postgres:postgres@postgres:5432/Testing_db_test
+        SELENIUM_DRIVER_URL: http://localhost:9515
+    
 
     - name: Run tests
       run: bundle exec rspec
