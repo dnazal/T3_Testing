@@ -12,7 +12,7 @@ jobs:
       postgres:
         image: postgres:14
         env:
-          POSTGRES_USER: postgres
+          POSTGRES_USER: diegonazal
           POSTGRES_PASSWORD: postgres
           POSTGRES_DB: Testing_db_test
         ports:
@@ -49,24 +49,23 @@ jobs:
         echo "Checking PostgreSQL service availability..."
         nc -zv postgres 5432 || true  # Using || true to ensure the step does not fail and allows further commands to execute
         echo "Attempting to connect to PostgreSQL..."
-        PGPASSWORD=$DB_PASSWORD psql -h postgres -U $DB_USER -d $POSTGES_DB -c 'SELECT version();'
+        PGPASSWORD=$DB_PASSWORD psql -h $DB_HOST -U $DB_USER -d $POSTGRES_DB -c 'SELECT version();'
       shell: /usr/bin/bash -e {0}
       env:
         RAILS_ENV: test
-        DB_USER: postgres
+        DB_USER: diegonazal
         DB_PASSWORD: postgres
         DB_HOST: postgres
-        DATABASE_URL: postgres://postgres:postgres@postgres:5432/Testing_db_test
+        DATABASE_URL: postgres://diegonazal:postgres@postgres:5432/Testing_db_test
         SELENIUM_DRIVER_URL: http://localhost:9515
-    
 
     - name: Run tests
       run: bundle exec rspec
 
     env:
       RAILS_ENV: test
-      DB_USER: postgres
+      DB_USER: diegonazal
       DB_PASSWORD: postgres
       DB_HOST: postgres  # Set to the service name
-      DATABASE_URL: postgres://postgres:postgres@postgres:5432/Testing_db_test
+      DATABASE_URL: postgres://diegonazal:postgres@postgres:5432/Testing_db_test
       SELENIUM_DRIVER_URL: http://localhost:9515
