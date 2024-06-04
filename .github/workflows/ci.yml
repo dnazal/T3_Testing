@@ -13,7 +13,7 @@ jobs:
         image: postgres:14
         env:
           POSTGRES_USER: diegonazal
-          POSTGRES_PASSWORD: pucon2000
+          POSTGRES_PASSWORD: postgres
           POSTGRES_DB: Testing_db_test
         ports:
           - 5432:5432
@@ -53,10 +53,10 @@ jobs:
       shell: /usr/bin/bash -e {0}
       env:
         RAILS_ENV: test
-        DB_USER: diegonazal
-        DB_PASSWORD: postgres
+        DB_USER: ${{ secrets.DB_USER }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         DB_HOST: postgres
-        DATABASE_URL: postgres://diegonazal:postgres@postgres:5432/Testing_db_test
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
         SELENIUM_DRIVER_URL: http://localhost:9515
 
     - name: Run tests
@@ -64,8 +64,11 @@ jobs:
 
     env:
       RAILS_ENV: test
-      DB_USER: diegonazal
-      DB_PASSWORD: postgres
-      DB_HOST: postgres 
-      DATABASE_URL: postgres://diegonazal:postgres@postgres:5432/Testing_db_test
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_HOST: postgres
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
       SELENIUM_DRIVER_URL: http://localhost:9515
+
+
+      
