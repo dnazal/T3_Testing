@@ -46,9 +46,8 @@ jobs:
 
     - name: Check PostgreSQL Service
       run: |
-        ping -c 3 postgres
+        nc -zv postgres 5432
         PGPASSWORD=$DB_PASSWORD psql -h postgres -U $DB_USER -d $POSTGRES_DB -c 'SELECT version();'
-
 
     - name: Run tests
       run: bundle exec rspec
@@ -57,6 +56,6 @@ jobs:
       RAILS_ENV: test
       DB_USER: postgres
       DB_PASSWORD: postgres
-      DB_HOST: postgres 
+      DB_HOST: postgres  # Set to the service name
       DATABASE_URL: postgres://postgres:postgres@postgres:5432/Testing_db_test
       SELENIUM_DRIVER_URL: http://localhost:9515
