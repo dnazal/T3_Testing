@@ -16,10 +16,10 @@ Capybara.register_driver :headless_chrome do |app|
   options.add_argument("--disable-extensions")
   options.add_argument("--disable-dev-shm-usage")
   options.add_argument("--no-sandbox")
-  if headless:
-  options.add_argument('--headless')
-  options.binary_location = "/usr/bin/chromium-browser"
-  self.driver = webdriver.Chrome(options=options)
+    if headless:
+      options.add_argument('--headless')
+      options.binary_location = "/usr/bin/chromium-browser"
+      self.driver = webdriver.Chrome(options=options)
 
   Capybara::Selenium::Driver.new(app, browser: :chrome, options:)
 end

@@ -11,6 +11,7 @@ AllCops:
     - 'app/**/*'
     - 'bin/**/*'
     - 'node_modules/**/*'
+    - 'spec/**/*'
 
 # Disable documentation requirement
 Documentation:
