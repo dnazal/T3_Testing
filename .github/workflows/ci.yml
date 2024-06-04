@@ -43,7 +43,7 @@ jobs:
         sudo apt-get update
         sudo apt-get install -y google-chrome-stable
 
-    - name: Install ChromeDriver
+    - name: Install ChromeDriver and Test Logging
       run: |
         CHROME_VERSION=$(google-chrome --version | cut -d ' ' -f 3 | cut -d '.' -f 1)
         CHROMEDRIVER_VERSION=$(wget -qO- "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION")
@@ -52,17 +52,20 @@ jobs:
         sudo mv chromedriver /usr/bin/chromedriver
         sudo chown root:root /usr/bin/chromedriver
         sudo chmod +x /usr/bin/chromedriver
-        chromedriver --verbose --log-path=/tmp/chromedriver.log
+        /usr/bin/chromedriver --verbose --log-path=/tmp/chromedriver.log &
+        sleep 10  # Allow time for ChromeDriver to initialize
+        if [ -f /tmp/chromedriver.log ]; then
+          echo "Log file created successfully."
+          cat /tmp/chromedriver.log
+        else
+          echo "Failed to create log file."
+        fi
 
     - name: Run RuboCop
       run: bundle exec rubocop
 
     - name: Run tests
       run: bundle exec rspec
-
-    - name: Print ChromeDriver logs
-      if: failure() # This step will run only if the previous steps fail
-      run: cat /tmp/chromedriver.log
 
     env:
       RAILS_ENV: test
