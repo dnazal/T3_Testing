@@ -9,7 +9,6 @@ end
 
 require 'capybara/rspec'
 
-# Configure Capybara to use Selenium and to run the browser headlessly
 Capybara.register_driver :headless_chrome do |app|
   options = Selenium::WebDriver::Chrome::Options.new
   options.add_argument('--headless')
