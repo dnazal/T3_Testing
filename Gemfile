@@ -14,11 +14,6 @@ gem 'sprockets-rails'
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 1.1'
 
-gem 'capybara'
-
-
-
-
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '~> 5.0'
 
@@ -70,7 +65,6 @@ group :development do
 end
 
 group :test do
-  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem 'capybara'
   gem 'database_cleaner-active_record'
   gem 'selenium-webdriver'
@@ -101,6 +95,3 @@ gem 'yard', '~> 0.9.26'
 gem 'httparty'
 gem 'rails-controller-testing'
 gem 'shoulda-matchers', '~> 5.0', require: false
-
-
-

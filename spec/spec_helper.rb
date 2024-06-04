@@ -4,7 +4,7 @@ require 'simplecov'
 SimpleCov.start 'rails' do
   add_filter '/bin/'
   add_filter '/db/'
-  add_filter '/spec/'  # Exclude spec directory from coverage metrics
+  add_filter '/spec/' # Exclude spec directory from coverage metrics
 end
 
 require 'capybara/rspec'
@@ -17,7 +17,7 @@ Capybara.register_driver :headless_chrome do |app|
   options.add_argument('--no-sandbox')
   options.add_argument('--window-size=1280,960')
 
-  Capybara::Selenium::Driver.new(app, browser: :chrome, options: options)
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options:)
 end
 
 Capybara.javascript_driver = :headless_chrome
@@ -36,13 +36,11 @@ RSpec.configure do |config|
 
   # Additional RSpec configuration can be added here
   config.filter_run_when_matching :focus
-  config.example_status_persistence_file_path = "spec/examples.txt"
+  config.example_status_persistence_file_path = 'spec/examples.txt'
   config.disable_monkey_patching!
   config.warnings = true
 
-  if config.files_to_run.one?
-    config.default_formatter = "doc"
-  end
+  config.default_formatter = 'doc' if config.files_to_run.one?
 
   config.profile_examples = 10
   config.order = :random

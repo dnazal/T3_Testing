@@ -1,30 +1,4 @@
-# .rubocop.yml
-
-# Inherits configurations from the base RuboCop gem's todo file
-inherit_from:
-  - .rubocop_todo.yml
-
-# General rules for all cops
 AllCops:
-  TargetRubyVersion: 3.1.3  # Adjust according to your Ruby version
   NewCops: enable
-  Exclude:
-    - 'db/schema.rb'
-    - 'bin/**/*'
-    - 'node_modules/**/*'
-
-# Disable the need for documentation for each class and module
-Documentation:
-  Enabled: false
-
-# Adjust the maximum length of lines
-Layout/LineLength:
-  Max: 200
-
-# Allows longer methods than usual
-Metrics/MethodLength:
-  Max: 35
-
-# Allows longer blocks than usual
-Metrics/BlockLength:
-  Enabled: false
+  TargetRubyVersion: 3.1.3
+  SuggestExtensions: false
