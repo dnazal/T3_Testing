@@ -61,6 +61,10 @@ RSpec.configure do |config|
   # Run specs in random order to surface order dependencies
   config.order = :random
 
+  
+  
   # Seed global randomization in this process using the `--seed` CLI option.
   Kernel.srand config.seed
+
+
 end
