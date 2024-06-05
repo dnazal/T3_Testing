@@ -1,11 +1,9 @@
+# spec/factories/users.rb
 FactoryBot.define do
-    factory :user do
-      name { "Diego Nazal" }
-      email { "diego.nazal@uc.cl" }
-      password { "Password1!" }
-      role { "user" }
-    end
+  factory :user do
+    sequence(:email) { |n| "user#{n}@example.com" }
+    password { "password" }
+    name { "User Name" }
+    role { "user" }
   end
-
-  
-
+end

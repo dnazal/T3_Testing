@@ -2,13 +2,11 @@
 FactoryBot.define do
   factory :product do
     nombre { "Product Name" }
-    descripcion { "Product Description" }
-    precio { 9.99 }
+    precio { 1000 }
     stock { 10 }
-
+    categories { 'Accesorio tecnologico' }
+    association :user
   end
 end
 
-
-  
   

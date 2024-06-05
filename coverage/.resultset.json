@@ -30,7 +30,7 @@
           1,
           null,
           null,
-          15,
+          22,
           1,
           null,
           null,
@@ -44,7 +44,7 @@
           null,
           null,
           1,
-          28,
+          42,
           null,
           null,
           null,
@@ -59,7 +59,7 @@
           null,
           null,
           1,
-          14,
+          21,
           null,
           1,
           null,
@@ -155,6 +155,29 @@
           null
         ]
       },
+      "/Users/diegonazal/Desktop/T3_Testing/app/models/contact_message.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          1,
+          1,
+          1,
+          null,
+          null,
+          1,
+          null,
+          null,
+          null,
+          null
+        ]
+      },
       "/Users/diegonazal/Desktop/T3_Testing/app/models/product.rb": {
         "lines": [
           null,
@@ -192,6 +215,38 @@
           1,
           1,
           1,
+          null
+        ]
+      },
+      "/Users/diegonazal/Desktop/T3_Testing/app/models/shopping_cart.rb": {
+        "lines": [
+          null,
+          null,
+          1,
+          1,
+          null,
+          1,
+          null,
+          null,
+          1,
+          2,
+          2,
+          2,
+          2,
+          null,
+          2,
+          null,
+          null,
+          1,
+          null,
+          2,
+          null,
+          2,
+          2,
+          2,
+          null,
+          2,
+          null,
           null
         ]
       },
@@ -517,38 +572,6 @@
           null,
           null,
           1,
-          null
-        ]
-      },
-      "/Users/diegonazal/Desktop/T3_Testing/app/models/shopping_cart.rb": {
-        "lines": [
-          null,
-          null,
-          1,
-          1,
-          null,
-          1,
-          null,
-          null,
-          1,
-          0,
-          0,
-          0,
-          0,
-          null,
-          0,
-          null,
-          null,
-          1,
-          null,
-          0,
-          null,
-          0,
-          0,
-          0,
-          null,
-          0,
-          null,
           null
         ]
       },
@@ -1482,31 +1505,6 @@
         "branches": {
         }
       },
-      "/Users/diegonazal/Desktop/T3_Testing/app/models/contact_message.rb": {
-        "lines": [
-          null,
-          null,
-          0,
-          null,
-          null,
-          null,
-          null,
-          null,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0,
-          0
-        ],
-        "branches": {
-        }
-      },
       "/Users/diegonazal/Desktop/T3_Testing/app/services/joke_api_service.rb": {
         "lines": [
           null,
@@ -1533,6 +1531,6 @@
         }
       }
     },
-    "timestamp": 1717614082
+    "timestamp": 1717619205
   }
 }

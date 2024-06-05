@@ -5,6 +5,9 @@ SimpleCov.start 'rails' do
   add_filter '/bin/'
   add_filter '/db/'
   add_filter '/spec/' # Exclude spec directory from coverage metrics
+  add_group 'Models', 'app/models'
+
+
 end
 
 require 'capybara/rspec'
@@ -62,7 +65,7 @@ RSpec.configure do |config|
   config.order = :random
 
   
-  
+
   # Seed global randomization in this process using the `--seed` CLI option.
   Kernel.srand config.seed
 
