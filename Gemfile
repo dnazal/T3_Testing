@@ -56,6 +56,7 @@ group :development, :test do
   # Cypress on Rails gem
   gem 'cypress-on-rails', '~> 1.0'
   # Rspec gem
+  gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 6.0.0'
 end
 
