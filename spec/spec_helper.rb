@@ -4,9 +4,11 @@ require 'simplecov'
 SimpleCov.start 'rails' do
   add_filter '/bin/'
   add_filter '/db/'
-  add_filter '/spec/' # Exclude spec directory from coverage metrics
+  add_filter '/spec/'
+  add_filter '/test/'
+  add_filter '/config/'
+  
   add_group 'Models', 'app/models'
-
 
 end
 
