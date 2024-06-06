@@ -57,7 +57,9 @@ group :development, :test do
   gem 'cypress-on-rails', '~> 1.0'
   # Rspec gem
   gem 'factory_bot_rails'
+  gem 'faker'
   gem 'rspec-rails', '~> 6.0.0'
+  gem 'simplecov', require: false
 end
 
 group :development do
@@ -76,8 +78,6 @@ gem 'rubocop', require: false
 gem 'rubocop-rails', require: false
 
 gem 'devise' # Para autenticacion
-
-gem 'simplecov', require: false, group: :test # Para pruebas
 
 gem 'cloudinary' # Para subir imagenes a la nube
 
