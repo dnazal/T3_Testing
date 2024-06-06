@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-
+require 'faker'
 require 'simplecov'
 SimpleCov.start do
   add_group 'Controllers', 'app/request'
