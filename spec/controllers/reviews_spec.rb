@@ -12,6 +12,7 @@ RSpec.describe ReviewController, type: :controller do
     sign_in user
   end
 
+
   describe "POST #insertar" do
     context "with valid params" do
       it "creates a new Review" do
@@ -48,7 +49,7 @@ RSpec.describe ReviewController, type: :controller do
       it "does not update the review" do
         patch :actualizar_review, params: { id: review.id, review: { tittle: '' } }
         review.reload
-        expect(review.tittle).not_to eq('')
+        expect(review.tittle).to_not eq('')
       end
     end
   end

@@ -1,44 +1,48 @@
-# frozen_string_literal: true
-
-# Controlador para las acciones relacionadas con las reseñas de productos
+# app/controllers/review_controller.rb
 class ReviewController < ApplicationController
-  load_and_authorize_resource
+  before_action :authenticate_user!
+  before_action :set_review, only: [:actualizar_review, :eliminar]
 
-  # Acción para crear una nueva reseña
+  def show
+    @review = Review.find(params[:id])
+  end
+
   def insertar
     @product = Product.find(params[:product_id])
-    @review = Review.new(parametros)
-    @review.product = @product
-    @review.user_id = current_user.id
+    @review = @product.reviews.new(review_params)
+    @review.user = current_user
 
     if @review.save
-      flash[:notice] = 'Review creado Correctamente !'
+      redirect_to "/products/leer/#{@product.id}", notice: 'Review created successfully.'
     else
-      flash[:error] =
-        'Hubo un error al guardar la reseña; debe completar todos los campos solicitados.'
+      flash[:error] = 'Failed to create review.'
+      redirect_to "/products/leer/#{@product.id}"
     end
-    redirect_to "/products/leer/#{params[:product_id]}"
   end
 
-  # Acción para actualizar una reseña existente
   def actualizar_review
-    @reviews = Review.find(params[:id])
-
-    flash[:error] = 'Hubo un error al editar la reseña. Complete todos los campos solicitados!' unless @reviews.update(parametros)
-    redirect_to "/products/leer/#{@reviews.product.id}"
+    if @review.update(review_params)
+      redirect_to "/products/leer/#{@review.product_id}", notice: 'Review updated successfully.'
+    else
+      flash[:error] = 'Failed to update review.'
+      redirect_to "/products/leer/#{@review.product_id}"
+    end
   end
 
-  # Acción para eliminar una reseña existente
   def eliminar
-    @reviews = Review.find(params[:id])
-    @reviews.destroy
-    redirect_to "/products/leer/#{@reviews.product.id}"
+    @review.destroy
+    redirect_to "/products/leer/#{@review.product_id}", notice: 'Review deleted successfully.'
   end
 
   private
 
-  # Método para filtrar y permitir los parámetros requeridos
-  def parametros
-    params.permit(:tittle, :description, :calification)
+  def set_review
+    @review = Review.find(params[:id])
   end
+
+  def review_params
+    params.require(:review).permit(:tittle, :description, :calification)
+  end
+
+  
 end
