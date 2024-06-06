@@ -1,0 +1,40 @@
+# Ignore bundler config.
+/.bundle
+/vendor/bundle
+
+# Ignore the default SQLite database.
+/db/*.sqlite3
+/db/*.sqlite3-journal
+/db/*.sqlite3-wal
+/db/*.sqlite3-shm
+
+# Ignore all logfiles and tempfiles.
+/log/*
+!/log/.keep
+/tmp
+/tmp/*
+!/tmp/.keep
+
+# Ignore pidfiles, but keep the directory.
+!/tmp/pids/
+!/tmp/sockets/
+tmp/pids/*
+tmp/sockets/*
+
+# Ignore uploaded files in development.
+/storage/*
+!/storage/.keep
+
+# Ignore generated files.
+/public/assets
+/public/packs
+/public/packs-test
+/public/system
+/public/uploads
+
+# Ignore cache files.
+/node_modules
+/yarn-error.log
+.yarn-integrity
+
+# I
