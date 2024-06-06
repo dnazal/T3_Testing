@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'faker'
+
 require 'simplecov'
 SimpleCov.start do
   add_group 'Controllers', 'app/request'
@@ -15,6 +15,7 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 require 'rspec/rails'
 require 'support/devise'
 require 'factory_bot_rails'
+require 'faker'
 
 # Add additional requires below this line. Rails is not loaded until this point!
 
