@@ -8,6 +8,7 @@ end
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
+require 'faker'
 ENV['RAILS_ENV'] ||= 'test'
 require_relative '../config/environment'
 # Prevent database truncation if the environment is production
@@ -15,7 +16,6 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 require 'rspec/rails'
 require 'support/devise'
 require 'factory_bot_rails'
-require 'faker'
 
 # Add additional requires below this line. Rails is not loaded until this point!
 

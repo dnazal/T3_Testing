@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   # Rutas generales
   root 'pages#index'
@@ -8,7 +10,7 @@ Rails.application.routes.draw do
   get '/reserva', to: 'pages#reserva'
 
   # Rutas de products
-  get 'products/index', to: 'products#index' 
+  get 'products/index', to: 'products#index'
   get 'products/leer/:id', to: 'products#leer'
   get 'products/crear', to: 'products#crear'
   post 'products/insertar', to: 'products#insertar'
@@ -29,7 +31,7 @@ Rails.application.routes.draw do
   patch '/users/actualizar_imagen', to: 'users#actualizar_imagen', as: 'user_actualizar_imagen'
 
   # Rutas de reviews
-  resources :reviews, only: [:show, :create, :update, :destroy]
+  resources :reviews, only: %i[show create update destroy]
   post 'review/insertar', to: 'review#insertar'
   patch 'review/actualizar/:id', to: 'review#actualizar_review'
   delete 'review/eliminar/:id', to: 'review#eliminar'
