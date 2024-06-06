@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   # Rutas generales
   root 'pages#index'
+  resources :pages, only: [:index, :show, :create, :update, :destroy]
   get 'pages/index'
   get '/', to: 'pages#index'
   get '/contacto', to: 'contact_message#mostrar'
@@ -38,7 +39,7 @@ Rails.application.routes.draw do
 
   # Rutas de messages
 
-  get 'message/leer/:id', to: 'message#leer' # Ruta de la vista leer o ver los detalles de un mensaje
+  get 'messages/leer/:id', to: 'messages#leer', as: 'message_leer' # Ruta de la vista leer o ver los detalles de un mensaje
   post 'message/insertar', to: 'message#insertar' # Ruta que procesa la creación de un mensaje en la base de datos
   delete '/message/eliminar', to: 'message#eliminar' # Ruta para eliminar un mensaje de la base de datos
 
@@ -51,6 +52,7 @@ Rails.application.routes.draw do
 
   # Rutas de contacto
   post 'contacto/crear', to: 'contact_message#crear' # Ruta que procesa la creación de un mensaje de contacto
+  patch 'contacto/actualizar/:id', to: 'contact_message#actualizar' # Ruta para actualizar un mensaje de contacto
   delete 'contacto/eliminar/:id', to: 'contact_message#eliminar' # Ruta para eliminar un mensaje de contacto}
   delete 'contacto/limpiar', to: 'contact_message#limpiar' # Ruta para eliminar todos los mensajes de contacto
 
