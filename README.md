@@ -1,9 +1,8 @@
-## Tarea X
+## Tarea 3
 
 ### Logros de la entrega:
-[Recuerden especificar quien hizo cada cosa]
-*
-*
+* Integracion Continua Logrado (Hecho por ambos)
+* Test unitarios sobre los modelos (Diego)
+* Test de integracion sobre los controladores (Javier)
+* Porcentaje de coverage: 85%
 
-### Informacion para el correcto:
-Incluir aqui cualquier detalle que pueda ser importante al momento de corregir.
