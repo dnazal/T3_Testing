@@ -6,3 +6,4 @@
 * Test de integracion sobre los controladores (Javier)
 * Porcentaje de coverage: 85%
 
+Se deben configurar las variables de entorno antes de ejecutar la aplicación
