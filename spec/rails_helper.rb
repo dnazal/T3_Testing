@@ -68,6 +68,11 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 
+  RSpec.configure do |config|
+    config.include Devise::Test::IntegrationHelpers, type: :system
+  end
+  
+
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
   config.include FactoryBot::Syntax::Methods

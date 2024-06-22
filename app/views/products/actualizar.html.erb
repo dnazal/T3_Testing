@@ -4,7 +4,6 @@
     <meta charset="utf-8">
 </head>
 
-
 <body>
     <div class="section">
         <% if current_user.role == "admin" %>
@@ -15,7 +14,7 @@
                     <div class="column is-half" style= "margin-top: 6rem;">
                         <% if flash[:error] %>
                             <div class="notification is-danger">
-                            <%= flash[:error] %>
+                                <%= flash[:error] %>
                             </div>
                         <% end %>
                 
@@ -23,28 +22,43 @@
                         <div class="field" >
                             <label class="label">Nombre</label>
                             <div class="control">
-                              <%=product_form.text_field :nombre , placeholder: "Nombre", class: "input"%>
+                                <%= product_form.text_field :nombre, placeholder: "Nombre", class: "input" %>
                             </div>
                         </div>
 
                         <div class="field">
                             <label class="label">Precio</label>
                             <div class="control">
-                              <%=product_form.text_field :precio , placeholder: "Precio", class: "input"%>
+                                <%= product_form.text_field :precio, placeholder: "Precio", class: "input" %>
                             </div>
                         </div>
 
-                        <div class="field">
+                        <div class="field stock-field">
                             <label class="label">Stock</label>
                             <div class="control">
-                              <%=product_form.text_field :stock , placeholder: "Stock", class: "input"%>
+                                <%= product_form.text_field :stock, placeholder: "Stock", class: "input" %>
+                            </div>
+                        </div>
+
+                        <div class="field horarios-field" style="display: none;">
+                            <label class="label">Fecha</label>
+                            <div class="control">
+                                <%= product_form.date_field :fecha, class: "input" %>
+                            </div>
+                            <label class="label">Hora de Inicio</label>
+                            <div class="control">
+                                <%= product_form.time_field :hora_inicio, class: "input" %>
+                            </div>
+                            <label class="label">Hora de Término</label>
+                            <div class="control">
+                                <%= product_form.time_field :hora_fin, class: "input" %>
                             </div>
                         </div>
 
                         <div class="field">
                             <label class="label">Imagen</label>
                             <div class="control">
-                              <%=product_form.file_field :image , html: {:html => {:class => 'input'}}%>
+                                <%= product_form.file_field :image, class: 'input' %>
                             </div>
                         </div>
 
@@ -58,12 +72,33 @@
                         </div>
                     </div>
                 </div>
-          <% end %>
+            <% end %>
         <% else %>
             <div class="notification is-warning">
                 Esta página es exclusiva para administradores.
             </div>
         <% end %>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const categorySelect = document.querySelector('#product_categories');
+            const horariosField = document.querySelector('.horarios-field');
+            const stockField = document.querySelector('.stock-field');
+
+            const checkCategory = () => {
+                const selectedCategory = '<%= @product.categories %>';
+
+                if (selectedCategory === 'Cancha') {
+                    horariosField.style.display = 'block';
+                    stockField.style.display = 'none';
+                } else {
+                    horariosField.style.display = 'none';
+                    stockField.style.display = 'block';
+                }
+            };
+
+            // Inicializa la vista
+            checkCategory();
+        });
+    </script>
 </body>
- 

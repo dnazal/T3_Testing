@@ -4,85 +4,90 @@
     <meta charset="utf-8">
 </head>
 
- 
 <body>
     <div class="section">
         <% if current_user.role == "admin" %>
-        <%= form_for @product, url: {action: "insertar"} do |product_form| %>
-                <!-- Protección CSRF -->
-                <%= token_tag nil %>
-                <div class="columns is-centered">
-                    <div class="column is-half" style= "margin-top: 6rem;">
-                        <% if flash[:error] %>
-                            <div class="notification is-danger">
-                                <%= flash[:error] %>
-                            </div>
-                        <% end %>
-                
-                        <h1 class="title is-1">Crear Producto</h1>
-                        <div class="field" >
-                            <label class="label">Nombre</label>
-                            <div class="control">
-                                <input class="input" placeholder="Nombre" type="int" name="product[nombre]" required>
-                            </div>
+        <%= form_for @product, url: {action: "insertar"}, html: {onsubmit: "return validateForm()"} do |product_form| %>
+            <!-- Protección CSRF -->
+            <%= token_tag nil %>
+            <div class="columns is-centered">
+                <div class="column is-half" style= "margin-top: 6rem;">
+                    <% if flash[:error] %>
+                        <div class="notification is-danger">
+                            <%= flash[:error] %>
                         </div>
-                      <div class="field">
+                    <% end %>
+
+                    <h1 class="title is-1">Crear Producto</h1>
+                    <div class="field">
+                        <label class="label">Nombre</label>
+                        <div class="control">
+                            <input class="input" placeholder="Nombre" type="text" name="product[nombre]" required>
+                        </div>
+                    </div>
+                    <div class="field">
                         <label class="label">Selecciona una categoría para tu producto</label>
-                        <div clas="control">
-                          <div class="select is-primary">
-                            <select name="product[categories]">
-                              <option>Cancha</option>
-                              <option>Accesorio tecnologico</option>
-                              <option>Accesorio deportivo</option>
-                              <option>Accesorio de vestir</option>
-                              <option>Accesorio de entrenamiento</option>
-                              <option>Suplementos</option>
-                              <option>Equipamiento</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-
-                        <div class="field">
-                            <label class="label">Precio</label>
-                            <div class="control">
-                                <input class="input" placeholder="Precio" type="int" name="product[precio]" required>
-                            </div>
-                        </div>
-
-                        <div class="field">
-                            <label class="label">Stock</label>
-                            <div class="control">
-                                <input class="input" placeholder="Stock" type="text" name="product[stock]" required>
-                            </div>
-                        </div>
-                        <div class="field horarios-field" style="display: none;">
-                            <label class="label">Horarios</label>
-                            <div class="control">
-                                <p> Si quiere agregar horarios de servicio escribalos en el formato: dia,hora_inicial,hora_final;dia,hora_inicial,hora_final</p>
-                                <input class="input" placeholder="Horarios" type="text" name="product[horarios]">
-                            </div>
-                        </div>
-
-                        <div class="field">
-                            <label class="label">Imagen</label>
-                            <div class="control">
-                              <%=product_form.file_field :image , html: {:html => {:class => 'input'}, :required => true}%>
-                            </div>
-                        </div>
-
-
-                        <div class="field is-grouped">
-                            <div class="control">
-                                <button class="button is-primary is-fullwidth">Guardar</button>
-                            </div>
-                            <div class="button is-primary is-danger">
-                                <%= link_to 'Cancelar', url_for(:back), class: "btn btn-warning" %>
+                        <div class="control">
+                            <div class="select is-primary">
+                                <select name="product[categories]" id="product_categories">
+                                    <option value="Cancha">Cancha</option>
+                                    <option value="Accesorio tecnologico">Accesorio tecnologico</option>
+                                    <option value="Accesorio deportivo">Accesorio deportivo</option>
+                                    <option value="Accesorio de vestir">Accesorio de vestir</option>
+                                    <option value="Accesorio de entrenamiento">Accesorio de entrenamiento</option>
+                                    <option value="Suplementos">Suplementos</option>
+                                    <option value="Equipamiento">Equipamiento</option>
+                                </select>
                             </div>
                         </div>
                     </div>
+
+                    <div class="field">
+                        <label class="label">Precio</label>
+                        <div class="control">
+                            <input class="input" placeholder="Precio" type="number" name="product[precio]" required>
+                        </div>
+                    </div>
+
+                    <div class="field stock-field">
+                        <label class="label">Stock</label>
+                        <div class="control">
+                            <input class="input" placeholder="Stock" type="number" name="product[stock]" id="product_stock" required>
+                        </div>
+                    </div>
+                    <div class="field horarios-field" style="display: none;">
+                        <label class="label">Fecha</label>
+                        <div class="control">
+                            <input class="input" type="date" name="product[fecha]" id="product_fecha">
+                        </div>
+                        <label class="label">Hora de Inicio</label>
+                        <div class="control">
+                            <input class="input" type="time" name="product[hora_inicio]" id="product_hora_inicio">
+                        </div>
+                        <label class="label">Hora de Término</label>
+                        <div class="control">
+                            <input class="input" type="time" name="product[hora_fin]" id="product_hora_fin">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Imagen</label>
+                        <div class="control">
+                            <%= product_form.file_field :image, class: 'input' %>
+                        </div>
+                    </div>
+
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button class="button is-primary is-fullwidth">Guardar</button>
+                        </div>
+                        <div class="button is-primary is-danger">
+                            <%= link_to 'Cancelar', url_for(:back), class: "btn btn-warning" %>
+                        </div>
+                    </div>
                 </div>
-            <%end %>
+            </div>
+        <% end %>
         <% else %>
             <div class="notification is-warning">
                 Esta página es exclusiva para administradores.
@@ -91,28 +96,53 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const categorySelect = document.querySelector('select[name="product[categories]"]');
+            const categorySelect = document.querySelector('#product_categories');
             const horariosField = document.querySelector('.horarios-field');
+            const stockField = document.querySelector('.stock-field');
+            const stockInput = document.querySelector('#product_stock');
 
             categorySelect.addEventListener('change', () => {
                 const selectedCategory = categorySelect.value;
 
                 if (selectedCategory === 'Cancha') {
                     horariosField.style.display = 'block';
+                    stockField.style.display = 'none';
+                    stockInput.value = 1; // Establecer el stock en 1 para Cancha
                 } else {
                     horariosField.style.display = 'none';
+                    stockField.style.display = 'block';
+                    stockInput.value = ''; // Limpiar el valor de stock para otras categorías
                 }
             });
 
             // Verificar la categoría seleccionada al cargar la página
             if (categorySelect.value === 'Cancha') {
                 horariosField.style.display = 'block';
+                stockField.style.display = 'none';
+                stockInput.value = 1; // Establecer el stock en 1 para Cancha
             } else {
                 horariosField.style.display = 'none';
+                stockField.style.display = 'block';
+                stockInput.value = ''; // Limpiar el valor de stock para otras categorías
             }
         });
 
+        function validateForm() {
+            const categorySelect = document.querySelector('#product_categories');
+            const selectedCategory = categorySelect.value;
+
+            if (selectedCategory === 'Cancha') {
+                const fechaInput = document.querySelector('#product_fecha');
+                const horaInicioInput = document.querySelector('#product_hora_inicio');
+                const horaFinInput = document.querySelector('#product_hora_fin');
+
+                if (!fechaInput.value || !horaInicioInput.value || !horaFinInput.value) {
+                    alert('Para la categoría Cancha, debe ingresar la fecha, hora de inicio y hora de término.');
+                    return false;
+                }
+            }
+
+            return true;
+        }
     </script>
 </body>
-
-
