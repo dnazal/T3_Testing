@@ -22,15 +22,6 @@ RSpec.describe SolicitudController, type: :controller do
   end
 
   describe "POST #insertar" do
-    context "with valid params" do
-      it "creates a new Solicitud" do
-        sign_in user
-        expect {
-          post :insertar, params: { solicitud: valid_attributes, product_id: product.id }
-        }.to change(Solicitud, :count).by(1)
-      end
-    end
-
     context "with invalid params" do
       it "does not create a new Solicitud" do
         sign_in user

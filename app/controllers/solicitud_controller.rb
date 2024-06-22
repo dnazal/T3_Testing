@@ -11,39 +11,43 @@ class SolicitudController < ApplicationController
   # rubocop:disable Metrics/AbcSize
   # Crea una nueva solicitud de compra
   def insertar
-    @solicitud = Solicitud.new
-    @solicitud.status = 'Pendiente'
-    @solicitud.stock = parametros[:stock]
-    producto = Product.find(params[:product_id])
-    @solicitud.product_id = producto.id
-    @solicitud.user_id = current_user.id
+    product_id = params[:product_id]
+    producto = Product.find(product_id)
 
-    if @solicitud.stock.to_i > producto.stock.to_i
-      flash[:error] = 'No hay suficiente stock para realizar la solicitud!'
-      redirect_to "/products/leer/#{params[:product_id]}"
-      return
+    # Verificar si el producto es una cancha
+    if producto.categories == 'Cancha'
+      # Verificar si ya no hay stock disponible
+      if producto.stock.to_i < 1
+        flash[:error] = 'No hay stock disponible para la reserva!'
+        redirect_to "/products/leer/#{product_id}"
+        return
+      end
+
+      solicitud = Solicitud.new(
+        status: 'Pendiente',
+        product_id: product_id,
+        user_id: current_user.id,
+        reservation_info: "Solicitud de reserva para el día #{producto.fecha}, de #{producto.hora_inicio.strftime('%H:%M')} a #{producto.hora_fin.strftime('%H:%M')}",
+        stock: 1 # Proporcionar un valor predeterminado para stock
+      )
+
+      if solicitud.save
+        producto.stock = producto.stock.to_i - 1
+        producto.save!
+        flash[:notice] = 'Reserva creada correctamente!'
+        redirect_to products_index_path
+      else
+        flash[:error] = 'Hubo un error al crear la reserva!'
+        Rails.logger.debug "Error al guardar la solicitud: #{solicitud.errors.full_messages.join(', ')}"
+        redirect_to "/products/leer/#{product_id}"
+      end
     else
-      producto.stock = producto.stock.to_i - @solicitud.stock.to_i
-    end
-
-    if params[:solicitud][:reservation_datetime].present?
-      fecha = params[:solicitud][:reservation_datetime].to_datetime
-      dia = fecha.strftime('%d/%m/%Y')
-      hora = fecha.strftime('%H:%M')
-      @solicitud.reservation_info = "Solicitud de reserva para el día #{dia}, a las #{hora} hrs"
-    end
-
-    if @solicitud.save && producto.update(stock: producto.stock)
-      flash[:notice] = 'Solicitud de compra creada correctamente!'
-      redirect_to "/products/leer/#{params[:product_id]}"
-    else
-      flash[:error] = 'Hubo un error al guardar la solicitud!'
-      redirect_to "/products/leer/#{params[:product_id]}"
-      Rails.logger.debug @solicitud.errors.full_messages
+      flash[:error] = 'Este producto no es una cancha!'
+      redirect_to "/products/leer/#{product_id}"
     end
   end
-
   # rubocop:enable Metrics/AbcSize
+
   # Elimina una solicitud de compra
   def eliminar
     @solicitud = Solicitud.find(params[:id])
@@ -75,7 +79,6 @@ class SolicitudController < ApplicationController
 
   # Permite los parámetros necesarios para la creación de una solicitud
   def parametros
-    params.require(:solicitud).permit(:stock,
-                                      :reservation_datetime).merge(product_id: params[:product_id])
+    params.require(:solicitud).permit(:stock, :reservation_datetime).merge(product_id: params[:product_id])
   end
 end

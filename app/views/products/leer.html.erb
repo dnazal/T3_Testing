@@ -5,8 +5,6 @@
     <link rel="stylesheet" href="/assets/products.css">
 </head>
 
-
-
 <body>
     <div class="section my-6">
         <div class="box">
@@ -54,61 +52,28 @@
                     <p class="title is-2"><%= @product.nombre %></p>
                     <p class="subtitle is-1"> <%= @product.precio.to_i.to_formatted_s(:currency, locale: :es) %></p>
                     <% if @product.categories == "Cancha" %>
-                        <p class="subtitle is-5">Quedan <%= @product.stock %> reservas disponibles</p>
-                        <% if @horarios.present? %>
-                            <p class="subtitle is-5">Los horarios de reserva disponible son:</p>
-                            <table>
-                                <thead>
-                                <tr>
-                                    <th>Día</th>
-                                    <th>Hora de inicio</th>
-                                    <th>Hora de fin</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <% @horarios.each do |horario| %>
-                                    <tr>
-                                    <td><%= horario[0] %></td>
-                                    <td><%= horario[1] %></td>
-                                    <td><%= horario[2] %></td>
-                                    </tr>
-                                <% end %>
-                                </tbody>
-                            </table>
-                        <% else %>
-                            <p>No se han especificado horarios concretos de reserva por parte del propietario.</p>
-                        <% end %>
-                    <%else%>
+                        <p class="subtitle is-5">Reserva:</p>
+                        <form method="POST" action="<%= solicitud_insertar_path %>" enctype="multipart/form-data">
+                            <%= hidden_field_tag :product_id, @product.id %>
+                            <!-- Protección CSRF -->
+                            <%= token_tag nil %>
+                            <input type="hidden" name="solicitud[stock]" value="1">
+                            <p class="subtitle is-5">Fecha de la cancha: <%= @product.fecha %></p>
+                            <p class="subtitle is-5">Hora de inicio: <%= @product.hora_inicio.strftime("%H:%M") %></p>
+                            <p class="subtitle is-5">Hora de término: <%= @product.hora_fin.strftime("%H:%M") %></p>
+                            <div class="field">
+                                <p class="control">
+                                    <button class="button is-primary">Reservar ahora</button>
+                                </p>
+                            </div>
+                        </form>
+                    <% else %>
                         <p class="subtitle is-5">Quedan <%= @product.stock %> unidades disponibles</p>
-                    <%end%>
+                    <% end %>
                     <% if user_signed_in? %>
                         <% if current_user.id != @product.user_id %>
                             <div class="section py-0 px-4">
-                                <% if @product.categories == "Cancha" %>
-                                    <form method="POST" action="/solicitud/insertar" enctype="multipart/form-data">
-                                        <%= hidden_field_tag :product_id, @product.id %>
-                                        <!-- Protección CSRF -->
-                                        <%= token_tag nil %>
-                                        <div class="field has-addons">
-                                            <div class="field">
-                                                <label class="label">Cuantas reservas deseas hacer?</label>
-                                                <p class="control pl-4">
-                                                    <input class="input" type="number" id="quantity" name="solicitud[stock]" min="1" max="100" step="1" value="1" placeholder="1">
-                                                </p>
-                                                <label class="label">Selecciona fecha y hora de reserva</label>
-                                                <div class="control">
-                                                    <input class="input" type="datetime-local" name="solicitud[reservation_datetime]" required>
-                                                </div>
-                                                <p class="control">
-                                                    <button class="button is-primary">Reservar ahora</button>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </form>
-                                <%end%>
-                                <br>
                                 <% if @product.categories != "Cancha"%>
-                                    <!-- Comprar ahora -->
                                     <form method="POST" action="/carro/comprar_ahora" enctype="multipart/form-data">
                                         <%= hidden_field_tag :product_id, @product.id %>
                                         <!-- Protección CSRF -->
@@ -137,7 +102,7 @@
                                         </div>
                                     </form>
                                     <br>
-                                <%end%>
+                                <% end %>
                                 <% if !current_user.deseados.include?(@product.id.to_s) %>
                                     <form method="POST" action="/products/insert_deseado/<%= @product.id %>" enctype="multipart/form-data" style="padding:1rem;">
                                         <%= hidden_field_tag :product_id, @product.id %>
@@ -145,16 +110,16 @@
                                         <%= token_tag nil %>
                                         <div class="field has-addons">
                                             <button class="button is-warning">
-                                            <span class="icon">
-                                                <i class="fas fa-save"></i>
-                                            </span>
-                                            <span>Guardar en deseados</span>
-                                            </button>                                  
+                                                <span class="icon">
+                                                    <i class="fas fa-save"></i>
+                                                </span>
+                                                <span>Guardar en deseados</span>
+                                            </button>
                                         </div>
                                     </form>
                                 <% else %>
                                     <div class="level-item has-text-centered">
-                                        <div class="notification is-warning" style= "border-radius: 5px">
+                                        <div class="notification is-warning" style="border-radius: 5px">
                                             <p class="text is-size-6">Este producto está en tu lista de deseados</p>
                                         </div>
                                     </div>
@@ -169,7 +134,7 @@
                         <% end %>
                     <% else %>
                         <div class="level-item has-text-centered">
-                            <div class="notification is-warning" style= "border-radius: 15px">
+                            <div class="notification is-warning" style="border-radius: 15px">
                                 <p class="text is-size-4">Debes iniciar sesión para comprar</p>
                             </div>
                         </div>
@@ -181,6 +146,7 @@
             </div>
         </div>
     </div>
+    
 
     <!-- Preguntas y respuestas -->
     <div class="block" style="margin-left: 1rem;">

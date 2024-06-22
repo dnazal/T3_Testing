@@ -12,13 +12,14 @@ class Product < ApplicationRecord
   # Valida que el campo nombre no esté vacío.
   validates :nombre, presence: true
 
-  # Valida que el campo stock no esté vacío y sea un número mayor o igual a 0.
-  validates :stock, presence: true, numericality: { greater_than_or_equal_to: 0 }
+  # Valida que el campo stock no esté vacío y sea un número mayor o igual a 0, a menos que el producto sea una cancha.
+  validates :stock, presence: true, numericality: { greater_than_or_equal_to: 0 }, unless: :cancha?
 
   # Valida que el campo precio no esté vacío y sea un número mayor o igual a 0.
   validates :precio, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
-  # Valida que el campo user_id no esté vacío.
+  # Validaciones específicas para las canchas.
+  validate :validar_horarios, if: :cancha?
 
   # Contiene una imagen como attachment.
   has_one_attached :image
@@ -31,6 +32,16 @@ class Product < ApplicationRecord
 
   # Establece la relación con el modelo Solicitud y destruye las solicitudes asociadas cuando se elimina el producto.
   has_many :solicituds, dependent: :destroy
-  validates :stock, numericality: { greater_than_or_equal_to: 0 }
-  validates :precio, numericality: { greater_than_or_equal_to: 0 }
+
+  private
+
+  def cancha?
+    categories == 'Cancha'
+  end
+
+  def validar_horarios
+    if fecha.blank? || hora_inicio.blank? || hora_fin.blank?
+      errors.add(:base, 'Para la categoría Cancha, debe ingresar la fecha, hora de inicio y hora de término.')
+    end
+  end
 end
