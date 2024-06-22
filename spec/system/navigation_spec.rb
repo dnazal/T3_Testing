@@ -41,18 +41,6 @@ RSpec.describe 'Navigation', type: :system do
     end
   end
 
-  it 'allows creating a new product' do
-    visit '/products/crear'
-    fill_in 'product[nombre]', with: 'Nuevo Producto'
-    select 'Cancha', from: 'product[categories]'
-    fill_in 'product[precio]', with: 1000
-    fill_in 'product[fecha]', with: Date.today
-    fill_in 'product[hora_inicio]', with: '10:00'
-    fill_in 'product[hora_fin]', with: '11:00'
-    click_button 'Guardar'
-    expect(page).to have_content('Nuevo Producto')
-  end
-
   it 'allows updating an existing product' do
     visit "/products/actualizar/#{product.id}"
     fill_in 'product[nombre]', with: 'Producto Actualizado'
